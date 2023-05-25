@@ -61,21 +61,22 @@ def main():
         for telomere in TELOMERE:
             spos=seqs[ID].find(telomere)
             pos=spos
-            if spos > EDGE_LIMIT or spos < 0:
-                continue
-            tmp=find_telomere(seqs[ID], telomere, INTERVAL_LIMIT)
-            print(ID[1:], telomere, "F", tmp[0], tmp[1], tmp[2])
-            outs+=ID[1:] +"\t"+ str(tmp[0]) +"\t"+ str(tmp[1]) +"\t"+ telomere +"\t"+ str(tmp[2]) +"\t+\n" 
+            #if spos > EDGE_LIMIT or spos < 0:
+            #    continue
+            if spos < EDGE_LIMIT and spos >= 0:
+                tmp=find_telomere(seqs[ID], telomere, INTERVAL_LIMIT)
+                print(ID[1:], telomere, "F", tmp[0], tmp[1], tmp[2])
+                outs+=ID[1:] +"\t"+ str(tmp[0]) +"\t"+ str(tmp[1]) +"\t"+ telomere +"\t"+ str(tmp[2]) +"\t+\n" 
             
             revseq=rev_com(seqs[ID])
             spos=revseq.find(telomere)
             pos=spos
-            if spos > EDGE_LIMIT or spos < 0:
-                continue
-
-            tmp=find_telomere(revseq, telomere, INTERVAL_LIMIT)
-            print(ID[1:], rev_com(telomere), "R", tmp[0], tmp[1], tmp[2])
-            outs+=ID[1:] +"\t"+ str(len(seqs[ID])-tmp[1]) +"\t"+ str(len(seqs[ID]) - tmp[0]) +"\t"+ telomere +"\t"+ str(tmp[2]) +"\t-\n"
+            #if spos > EDGE_LIMIT or spos < 0:
+            #    continue
+            if spos < EDGE_LIMIT and spos >= 0:
+                tmp=find_telomere(revseq, telomere, INTERVAL_LIMIT)
+                print(ID[1:], rev_com(telomere), "R", tmp[0], tmp[1], tmp[2])
+                outs+=ID[1:] +"\t"+ str(len(seqs[ID])-tmp[1]) +"\t"+ str(len(seqs[ID]) - tmp[0]) +"\t"+ telomere +"\t"+ str(tmp[2]) +"\t-\n"
 
     if args.o:
         fhw=open(args.o,"w")
